@@ -1,7 +1,7 @@
 ---
 layout: page
 title: golden05
-tagline: Supporting tagline
+tagline: 
 ---
 {% include JB/setup %}
 

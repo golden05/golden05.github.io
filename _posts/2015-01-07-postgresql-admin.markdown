@@ -2,7 +2,7 @@
 layout: post
 title: "Postgresql-admin"
 date: 2015-01-07T08:53:35+08:00
-categories: Postgresql admin
+categories: Postgresql
 tags: [postgresql,admin]
 
 ---
