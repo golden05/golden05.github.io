@@ -14,6 +14,7 @@ PSQL_HISTORY  历史命令 默认~/.psql_history
 PSQLRC  .psqlrc 配置文件地方和名称
 
 .psqlrc 配置文件内容
+
 		\set PROMPT1 '%n@%M:%>%x %/# ' 自定义提示符 登录用户(%n), 服务器机器(%M)  port (%>)  事务状态(%x)  数据库 (%/)
 		\connect postgis_book 连接另一个数据库
 		\timing on  每次执行的时间
@@ -30,6 +31,7 @@ PSQLRC  .psqlrc 配置文件地方和名称
 		\set HISTFILE ~/.psql_history- :HOST - :DBNAME  按主机和数据库名保留历史命令
 
 ##psql 执行命令		
+
 		\!  执行操作系统命令
 		
 		\watch  间隔秒数

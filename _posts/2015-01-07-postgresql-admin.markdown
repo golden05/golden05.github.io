@@ -55,6 +55,7 @@ trust 信赖不需要密码 password 明文密码 md5 加密密码 ident 使用p
 		SELECT pg_terminate_backend(pid) 
 			FROM pg_stat_activity 
 				WHERE usename = 'some_role'; <!--根据查询同时取消多个连接-->
+
 #Roles
 当前版本使用role和group role替代用户和组
 默认postgres
@@ -94,6 +95,7 @@ SELECT, INSERT, UPDATE, ALTER, EXECUTE, TRUNCATE
 		GRANT SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA my_schema TO PUBLIC; 授予PUBLIC角色在my_schema模式对所有序列SELECT, UPDATE许可
 		GRANT USAGE ON SCHEMA my_schema TO PUBLIC; 授予PUBLIC角色在my_schema模式使用许可
 		REVOKE EXECUTE ON ALL FUNCTIONS IN SCHEMA my_schema FROM PUBLIC;回收角色PUBLIC在模式my_schema里运行所有函数许可
+
 ##默认许可
 
 		GRANT USAGE ON SCHEMA my_schema TO PUBLIC;
@@ -127,10 +129,12 @@ functions, tables, data types, casts, languages, operators classes
 		WHERE
 		D.refclassid = 'pg_catalog.pg_extension'::pg_catalog.regclass AND
 		deptype = 'e' AND E.extname = 'fuzzystrmatch'; fuzzystrmatch扩展里有哪些
+
 安装扩展有两个目录
 
 		psql -p 5432 -d postgres -f /usr/pgsql-9.0/share/contrib/adminpack.sql 安装扩展 操作系统命令
 		CREATE EXTENSION fuzzystrmatch; 
+
 ##流行扩展
 btree_gist btree_gin postgis fuzzystrmatch hstore pg_trgm (trigram) pgcrypto tsearch xml
 
@@ -146,11 +150,13 @@ btree_gist btree_gin postgis fuzzystrmatch hstore pg_trgm (trigram) pgcrypto tse
 		
 		pg_dumpall -h localhost -U postgres --port=5432 -f myglobals.sql --globals-only  备份所有角色和表空间
 		pg_dumpall -h localhost -U postgres --port=5432 -f myroles.sql --roles-only 仅备份所有角色
+
 ## 恢复 两种方法
 ###psql
 		psql -U postgres -f myglobals.sql  用SQL语句恢复
 		psql -U postgres --set ON_ERROR_STOP=on -f myglobals.sql 如果有错停下
 		psql -U postgres -d mydb -f select_objects.sql 恢复一个指定数据库
+
 ###pg_restore   tar custom directory
 		CREATE DATABASE mydb;  先建库
 		pg_restore --dbname=mydb --jobs=4 --verbose mydb.backup 并行恢复
