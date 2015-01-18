@@ -3,7 +3,7 @@ layout: post
 title: "Postgresql-psql"
 date: 2015-01-07T20:32:58+08:00
 categories: Postgresql
-tags: [postgresql,psql]
+tags: [PostgreSQL,psql]
 ---
 
 #Environment Variables 环境变量

@@ -3,7 +3,7 @@ layout: post
 title: "PostgreSQL Functions"
 description: "Postgresql-Functions"
 categories: Postgresql
-tags: [Postgresql,Functions]
+tags: [PostgreSQL,Functions]
 ---
 {% include JB/setup %}
 

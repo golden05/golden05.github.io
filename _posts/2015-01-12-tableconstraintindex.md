@@ -3,7 +3,7 @@ layout: post
 title: "TableConstraintIndex"
 description: "Postgresql Tables Constraints and Index"
 category: Postgresql
-tags: [Postgresql,Table,Constraint,Index]
+tags: [PostgreSQL,Table,Constraint,Index]
 ---
 {% include JB/setup %}
 
