@@ -3,7 +3,7 @@ layout: post
 title: "PostgreSQL Performance"
 description: "PostgreSQL Performance"
 category: Postgresql
-tags: [PostgreSQL,Functions]
+tags: [PostgreSQL,Performance]
 
 ---
 {% include JB/setup %}
