@@ -9,12 +9,17 @@ tags: [PostgreSQL,Table,Constraint,Index]
 
 #Tables
 ##表的创建
+
 		CREATE TABLE logs (
 			log_id serial PRIMARY KEY, 
 			user_name varchar(50), 
 			description text, 
 			log_ts timestamp with time zone NOT NULL DEFAULT current_timestamp); 
 		CREATE INDEX idx_logs_log_ts ON logs USING btree (log_ts);
+		
+表名的搜索是通过搜索路径search_path，可以设置模式
+
+		SET search_path TO myschema,public;
 
 ##表的继承
 ###父子设计是非常好的分割数据的方式
@@ -133,4 +138,7 @@ btree支持哪一个数据类型和操作类
 		  USING btree (type, upper(name) varchar_pattern_ops);
 
 使数据库只扫描已索引的 index-only scans 不管基础表
+
+##CREATE INDEX CONCURRENTLY 
+创建索引，可以在索引时不锁住表
  
