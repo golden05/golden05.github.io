@@ -8,7 +8,8 @@ tags: [Rails]
 {% include JB/setup %}
 
 #setup
-rails new app -T --database=postgresql
+
+		rails new app -T --database=postgresql
 
 修改gem文件
 		
@@ -81,5 +82,41 @@ rails new app -T --database=postgresql
 		rake db:create:all
 		
 在rails的4.2版本 数据库已经可以自动clone到测试数据库，不用运行rake:db:clone
+
+环境变量设置
+ 
+		RAILS_ENV=production rake db:migrate
+		rails c production
+		rails c --sandbox   进入沙盒模式退出就不更新
+		rails s -p 4000 -e production   修改默认端口和环境模式
+			
+在环境文件里修改设置
+
+		config.autoload_paths += %W(#{config.root}/extras) 自动加入
+		config.time_zone = 'Central Time (US & Canada)'  时区
+		config.i18n.default_locale = :de  语言
+		config.active_record.schema_format = :sql  如果迁移文件里有自定义sql语句
+		Rails.application.config.filter_parameters += [:password] 避免把password值显示在log
+		
+config/secrets.yml
+
+Development 模式		
+		
+		config.cache_classes = false   每次http请求重新载入
+		
+行数统计
+
+		rake stats   其中loc指不包含空行的行数
+		
+#查错
+检查model，可以调用rails console，检查Model的方法是否正确
+
+检查Controller和Views，使用debug帮助方法
+
+		<%= debug(@event) %>  在view中或在controller中
+
+使用logger文件
+
+		Rails.logger.debug("event: #{@event.inspect}")  在程序内嵌
 		
 		

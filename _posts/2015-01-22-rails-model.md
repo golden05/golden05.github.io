@@ -12,7 +12,10 @@ tags: [Rails Model Rspec]
 		rails g model contact
 		Post.create title: "First Post"
 		post = Post.new
-		post.save
+		post.save   pass validate will return true
+		post.save!  throw exception while invalidated
+		Post.create equal new and save pass validate will return true 
+		Post.create! equal new and save throw exception 
 		Post.all
 		Post.first
 		Post.last
@@ -54,10 +57,47 @@ db/schema.rb 保持数据库的当前状态
 #验证Validation
 Validation作为类方法实现
 
+		e = Event.new
+		e.valid?      
 		validates :title, :presence => true
-		:uniqueness
-		validates :title, :length => { :minimum => 5 } 或者使用:is表示一个确切值
-		validates :title, :exclusion => { :in => [ "Title" ] } 或者:inclusion
+		validates :email, uniqueness: true
+		validates :name, uniqueness: { scope: :year,
+		    message: "should happen once per year" }
+		validates :title, length: { minimum: 5 } 或者使用:is表示一个确切值
+		validates :title, exclusion: { in: [ "Title" ] } 或者:inclusion
+		validates :points, numericality: true
+		validates :games_played, numericality: { only_integer: true }
+		validates :email, format: { with: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i }
+		validates :size, inclusion: { in: %w(small medium large),
+		    message: "%{value} is not a valid size" }     #only value
+		validates :subdomain, exclusion: { in: %w(www us ca jp),
+		    message: "%{value} is reserved." }            #exclusion value
+		
+		validates :email, confirmation: true    #confirm  email
+		<%= text_field :person, :email %>
+		<%= text_field :person, :email_confirmation %>
+		
+##公用参数 Common Parameters
+
+		allow nil     if value is nil then ignore validate
+		allow blank   if value is nil or blank then ignore validate
+		message       custom  message
+		on			  on: create 
+		if,unless     condition
+		
+##Callback回调   顺序order
+
+		(-) save
+		(-) valid
+		(1) before_validation  :method
+		(-) validate
+		(2) after_validation  :method
+		(3) before_save  :method
+		(4) before_create  :method
+		(-) create
+		(5) after_create  :method
+		(6) after_save	:method
+		(7) after_commit  :method
 		
 ##测试数据
 
@@ -74,18 +114,25 @@ Validation作为类方法实现
 		post.comments.empty?  是否为空
 		post.comments.size
 		post.comments.find comment_id 如果找不到抛出ActiveRecord::RecordNotFound
-		build_post 创建这个comment的post，但没有存到数据库中
-		create_post  创建这个comment的post，并保存到数据库中
+		build_post 创建这个comment的post，但没有存到数据库中 关联名
+		create_post  创建这个comment的post，并保存到数据库中 关联名
 		create_post! 创建这个comment的post，存到数据库中,如果无效出错抛出ActiveRecord::RecordInvalid
 		
-#自连接
+		Post.join(:comment)  #like SQL inner join
+		SELECT "Posts".* FROM "posts" INNER JOIN "comments" ON "comments"."id" = "posts"."comment_id"
+		Event.joins(:category).where("categories.name is NOT NULL")
+		Post.join(:comment,:location) #like inner multi join
+		
+		Event.includes(:category)  #like SQL left join
+		
+##自连接
 
 		has_many :subordinates, class_name: 'Employee', foreign_key: 'manager_id'
 		belongs_to :manager, class_name: 'Employee' class指向同一个类 
 		
-#多－多连接
+##多多连接
 两个不同的方法
-##has_and_belongs_to_many
+###has_and_belongs_to_many很少使用
 		has_and_belongs_to_many :books  要有一个join表authors_books实现这个连接
 		rails g migration CreateAuthorsBooks 创建一个空的迁移文件，做以下修改
 		def change
@@ -99,7 +146,7 @@ Validation作为类方法实现
 		      t.index :book_id
 		end         
 		
-##has_many :through      
+###has_many :through      主要使用
 
 		class Band < ActiveRecord::Base
 		  has_many :performances
@@ -111,7 +158,7 @@ Validation作为类方法实现
 		  belongs_to :venue
 		end
 		
-#Single-Table单表继承
+##Single-Table单表继承
 使用了一个字段type来保持继承，type值为每个对象
 		
 		class Pet < ActiveRecord::Base
@@ -127,9 +174,18 @@ Validation作为类方法实现
 		
 		Dog.count 返回 2  Fish.count 返回 1
 		
-#polymorphic多态关联连接
+##polymorphic多态关联连接
 一个模型归属于超过一个以上的模型
 
+		class CreateComments < ActiveRecord::Migration
+		  def change
+		    create_table :comments do |t|
+		      t.text :content
+		      t.belongs_to :commentable, polymorphic: true
+		      t.timestamps
+		    end
+		  end
+		end
 		class Post < ActiveRecord::Base
 		  has_many :comments, as: :commentable
 		end
@@ -139,7 +195,24 @@ Validation作为类方法实现
 		class Comment < ActiveRecord::Base
 		  belongs_to :commentable, polymorphic: true
 		end
+		comment = post.comments.create(content: "First comment")
+		comment.commentable   #return Post id
+		comment.commentable_type 
 		
+#transaction事务，multi action in one transaction	
+
+		User.transaction do
+		  User.create!(:name => 'ihower')
+		  Feed.create!
+		end
+		
+#Dirty objects 脏数据
+
+	 	person.changed?   false  no change  true  changed
+		person.name_changed?   attribute change? 
+		person.name_was       Value before change
+		person.name_change     value before and after change 
+
 #社交应用
 		
 		rails generate resource User name email 

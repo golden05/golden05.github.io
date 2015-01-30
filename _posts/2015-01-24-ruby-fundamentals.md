@@ -2,9 +2,10 @@
 layout: post
 title: "Ruby Fundamentals"
 description: "Ruby Fundamentals"
-category:Ruby 
+category: Ruby 
 tags: [Ruby]
 ---
+
 {% include JB/setup %}
 
 #ruby的交互
