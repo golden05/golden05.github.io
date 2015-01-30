@@ -5,7 +5,6 @@ description: "Ruby Fundamentals"
 category: Ruby 
 tags: [Ruby]
 ---
-
 {% include JB/setup %}
 
 #ruby的交互

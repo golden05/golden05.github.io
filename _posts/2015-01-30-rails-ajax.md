@@ -1,8 +1,9 @@
 ---
 layout: post
 title: "Rails Ajax"
-description: ""
-category: 
-tags: []
+description: "Rails Ajax"
+category: Rails
+tags: [Rails Ajax]
 ---
 {% include JB/setup %}
+
