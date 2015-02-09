@@ -898,14 +898,14 @@ put dropdown menu in button, just nesting .btn-group
 		</div>
 		
 ##Justified button groups  两端对齐
-###About <a>
+###About a
 put .btn element into .btn-group .btn-group-justified
 
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
 		  ...
 		</div>
 		
-###About <button>
+###About button
 put each button in a button group 
 
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
