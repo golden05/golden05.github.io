@@ -177,7 +177,7 @@ font-size   line-height  @font-size-base  @line-height-base
 		.table-responsive  put .table in the .table-responsive create responsive table
 		
 ###form
-form element <input>、<textarea> and <select> .. 
+form element <input>、<textarea> and <select> 
 	
 		.form-group any element in .form-group good arrange
 		.form-control    will set width 100%
