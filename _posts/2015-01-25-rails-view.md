@@ -35,6 +35,9 @@ tags: [Rails View Rspec]
 		mail_to E-mail
 		button_to 按鈕連結
 		current_page?
+		content_for  :symbol  "sss" send "sss" to layout file 
+		  yield :symbol
+		provide  :symbol "sss"  #like content_for but support http streaming
 		
 ##form helper
 

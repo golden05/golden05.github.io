@@ -26,6 +26,10 @@ tags: [Rails Model Rspec]
 		post.destroy   删除
 		Post.destroy 2  
 		Post.where(title: "First Post").destroy_all
+		update_attribute
+		user.update_attribute(:name, "The Dude")   #use a attribute's hash to update
+		user.update_attributes(name: "The Dude", email: "dude@abides.org") #update multi attributes
+		
 		
 ##条件查询
 

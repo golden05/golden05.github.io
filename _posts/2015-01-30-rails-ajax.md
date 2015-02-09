@@ -75,4 +75,12 @@ how to deal with json
 		        event_area.html( data.name );
 		    });
 		});
-		</script>			 
+		</script>		
+		
+#Turbolinks
+---
+to make every hyperlink to use Ajax to replace the contents on the body
+
+		 	$(document).on("page:change", function(){ ...})
+			
+	
